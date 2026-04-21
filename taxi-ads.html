@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaxiAds Ismailia — إعلانات التاكسي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFD600;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --gray: #1C1C1C;
+    --light: #F5F5F0;
+    --accent: #FF4D00;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--light);
+    font-family: 'Cairo', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,214,0,0.1);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 28px;
+    color: var(--yellow);
+    letter-spacing: 2px;
+  }
+
+  .logo span { color: var(--light); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+  }
+
+  nav ul a {
+    color: rgba(245,245,240,0.7);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.3s;
+    letter-spacing: 0.5px;
+  }
+
+  nav ul a:hover { color: var(--yellow); }
+
+  .nav-cta {
+    background: var(--yellow);
+    color: var(--black) !important;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-weight: 700 !important;
+    transition: transform 0.2s !important;
+  }
+
+  .nav-cta:hover { transform: scale(1.05); color: var(--black) !important; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 120px 40px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(255,214,0,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,77,0,0.06) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,214,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,214,0,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,214,0,0.1);
+    border: 1px solid rgba(255,214,0,0.3);
+    color: var(--yellow);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--yellow);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .hero h1 {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero h1 .highlight {
+    color: var(--yellow);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero h1 .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 0; right: 0;
+    height: 4px;
+    background: var(--accent);
+    transform: scaleX(0);
+    animation: lineReveal 0.6s ease 1s both;
+  }
+
+  @keyframes lineReveal { to { transform: scaleX(1); } }
+
+  .hero p {
+    font-size: 18px;
+    color: rgba(245,245,240,0.65);
+    line-height: 1.8;
+    max-width: 520px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+
+  .btn-primary {
+    background: var(--yellow);
+    color: var(--black);
+    padding: 16px 36px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    background: #ffe033;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(255,214,0,0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--light);
+    padding: 16px 36px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    border: 1.5px solid rgba(245,245,240,0.2);
+    transition: all 0.3s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--yellow);
+    color: var(--yellow);
+    transform: translateY(-2px);
+  }
+
+  /* TAXI ILLUSTRATION */
+  .hero-visual {
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.07;
+    font-size: 380px;
+    line-height: 1;
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(-50%) rotate(-5deg); }
+    50% { transform: translateY(-53%) rotate(-3deg); }
+  }
+
+  /* STATS STRIP */
+  .stats-strip {
+    background: var(--yellow);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+    color: var(--black);
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 42px;
+    letter-spacing: 1px;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0.7;
+  }
+
+  /* ===== HOW IT WORKS ===== */
+  section { padding: 100px 40px; }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    color: rgba(245,245,240,0.5);
+    font-size: 17px;
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 64px;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+  }
+
+  .step-card {
+    background: var(--gray);
+    padding: 48px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+    cursor: default;
+  }
+
+  .step-card:hover {
+    background: #222;
+    transform: translateY(-4px);
+  }
+
+  .step-card:hover .step-num { color: var(--yellow); }
+
+  .step-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 80px;
+    color: rgba(255,255,255,0.05);
+    position: absolute;
+    top: 16px; left: 24px;
+    line-height: 1;
+    transition: color 0.4s;
+  }
+
+  .step-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-card p {
+    color: rgba(245,245,240,0.55);
+    font-size: 15px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== FOR WHO ===== */
+  .for-who { background: var(--dark); }
+
+  .audience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 900px;
+  }
+
+  .audience-card {
+    border: 1.5px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 40px;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .audience-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--yellow);
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 0;
+  }
+
+  .audience-card:hover::before { opacity: 0.04; }
+  .audience-card:hover { border-color: var(--yellow); transform: translateY(-4px); }
+
+  .audience-card > * { position: relative; z-index: 1; }
+
+  .audience-icon {
+    width: 56px; height: 56px;
+    background: rgba(255,214,0,0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .audience-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--yellow);
+  }
+
+  .audience-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .audience-card ul li {
+    font-size: 15px;
+    color: rgba(245,245,240,0.65);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .audience-card ul li::before {
+    content: '✓';
+    color: var(--yellow);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ===== WHY ===== */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  .why-card {
+    background: var(--gray);
+    border-radius: 12px;
+    padding: 32px;
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: all 0.3s;
+  }
+
+  .why-card:hover {
+    border-color: rgba(255,214,0,0.3);
+    transform: translateY(-4px);
+  }
+
+  .why-card .icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .why-card h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .why-card p {
+    font-size: 14px;
+    color: rgba(245,245,240,0.5);
+    line-height: 1.7;
+  }
+
+  /* ===== CTA ===== */
+  .cta-section {
+    background: var(--yellow);
+    text-align: center;
+    padding: 100px 40px;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 900;
+    color: var(--black);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .cta-section p {
+    font-size: 18px;
+    color: rgba(10,10,10,0.65);
+    margin-bottom: 40px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  .cta-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-dark {
+    background: var(--black);
+    color: var(--yellow);
+    padding: 16px 40px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.3s;
+  }
+
+  .btn-dark:hover {
+    background: #222;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+
+  .btn-outline-dark {
+    background: transparent;
+    color: var(--black);
+    padding: 16px 40px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    border: 2px solid var(--black);
+    transition: all 0.3s;
+  }
+
+  .btn-outline-dark:hover {
+    background: var(--black);
+    color: var(--yellow);
+    transform: translateY(-2px);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--dark);
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  footer .logo { font-size: 22px; }
+
+  footer p {
+    color: rgba(245,245,240,0.3);
+    font-size: 13px;
+  }
+
+  footer a {
+    color: var(--yellow);
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    nav { padding: 16px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    section { padding: 70px 24px; }
+    .stats-strip { gap: 40px; padding: 20px 24px; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .hero-visual { font-size: 200px; opacity: 0.05; }
+    footer { padding: 30px 24px; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">TAXI<span>ADS</span></div>
+  <ul>
+    <li><a href="#how">كيف يعمل</a></li>
+    <li><a href="#who">لمن؟</a></li>
+    <li><a href="#why">لماذا نحن؟</a></li>
+    <li><a href="#contact" class="nav-cta">تواصل معنا</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-visual">🚕</div>
+
+  <div class="hero-content">
+    <div class="hero-badge">🟡 الإسماعيلية — مصر</div>
+
+    <h1>
+      إعلانك على<br>
+      <span class="highlight">كل تاكسي</span><br>
+      في المدينة
+    </h1>
+
+    <p>
+      نربط أصحاب الأعمال المحلية بسائقي التاكسي — إعلانات تتحرك في كل شوارع الإسماعيلية، ودخل إضافي ثابت للسائق.
+    </p>
+
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">أعلن معنا الآن ←</a>
+      <a href="#how" class="btn-secondary">كيف يعمل؟</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <span class="stat-num">500+</span>
+    <span class="stat-label">تاكسي في الشبكة</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">100K+</span>
+    <span class="stat-label">مشاهدة يومية</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">50+</span>
+    <span class="stat-label">عميل محلي</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">3X</span>
+    <span class="stat-label">أرخص من اللوحات</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">الآلية</div>
+  <h2 class="section-title fade-up">كيف يعمل النظام؟</h2>
+  <p class="section-sub fade-up">ثلاث خطوات بسيطة تحول سيارة التاكسي إلى لوحة إعلانية متحركة في قلب المدينة.</p>
+
+  <div class="steps-grid">
+    <div class="step-card fade-up">
+      <span class="step-num">01</span>
+      <span class="step-icon">🏪</span>
+      <h3>صاحب العمل يعلن</h3>
+      <p>تختار الحملة، المنطقة، والمدة — ونصمم الإعلان بشكل احترافي ونثبته على التاكسي.</p>
+    </div>
+    <div class="step-card fade-up">
+      <span class="step-num">02</span>
+      <span class="step-icon">🚕</span>
+      <h3>السائق يتحرك ويكسب</h3>
+      <p>السائق يمشي في شغله كالعادة — وفي نفس الوقت يكسب دخلاً إضافياً ثابتاً بدون أي جهد.</p>
+    </div>
+    <div class="step-card fade-up">
+      <span class="step-num">03</span>
+      <span class="step-icon">📍</span>
+      <h3>الإعلان يصل للجميع</h3>
+      <p>إعلانك يتنقل في كل أحياء الإسماعيلية — سوق، جامعة، محطة، كورنيش — طوال اليوم.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section id="who" class="for-who">
+  <div class="section-label">الجمهور</div>
+  <h2 class="section-title fade-up">لمن هذه الخدمة؟</h2>
+  <p class="section-sub fade-up">حللنا احتياج الطرفين — وصممنا نظاماً يخدمهم معاً.</p>
+
+  <div class="audience-grid">
+    <div class="audience-card fade-up">
+      <div class="audience-icon">🏢</div>
+      <h3>أصحاب الأعمال</h3>
+      <ul>
+        <li>مطاعم وكافيهات</li>
+        <li>صيدليات ومحلات</li>
+        <li>مراكز تعليمية وطبية</li>
+        <li>عيادات ومستشفيات</li>
+        <li>محلات الملابس والتجزئة</li>
+        <li>وكلاء عقارات</li>
+      </ul>
+    </div>
+    <div class="audience-card fade-up">
+      <div class="audience-icon">🚖</div>
+      <h3>سائقو التاكسي</h3>
+      <ul>
+        <li>دخل إضافي شهري ثابت</li>
+        <li>لا تغيير في جدول العمل</li>
+        <li>التسجيل مجاني وسهل</li>
+        <li>نحن نتولى كل شيء</li>
+        <li>دفع منتظم وموثوق</li>
+        <li>مجتمع سائقين متنامي</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-label">مزايانا</div>
+  <h2 class="section-title fade-up">لماذا TaxiAds؟</h2>
+  <p class="section-sub fade-up">لأن الإعلان المحلي الفعّال لا يحتاج ميزانية ضخمة — يحتاج فكرة ذكية.</p>
+
+  <div class="why-grid">
+    <div class="why-card fade-up">
+      <span class="icon">📍</span>
+      <h4>محلي 100%</h4>
+      <p>إعلانك يصل لناس الإسماعيلية بالظبط — مش إعلان عشوائي على الإنترنت.</p>
+    </div>
+    <div class="why-card fade-up">
+      <span class="icon">💰</span>
+      <h4>تكلفة منخفضة</h4>
+      <p>أرخص بكثير من اللوحات الإعلانية الثابتة مع نفس الانتشار أو أكثر.</p>
+    </div>
+    <div class="why-card fade-up">
+      <span class="icon">👁️</span>
+      <h4>رؤية متكررة</h4>
+      <p>الناس تشوف إعلانك كل يوم في أماكن مختلفة — وده يبني الوعي بالعلامة التجارية.</p>
+    </div>
+    <div class="why-card fade-up">
+      <span class="icon">📊</span>
+      <h4>نتائج قابلة للقياس</h4>
+      <p>نوفرلك تقرير دوري بعدد الكيلومترات والمناطق اللي غطاها إعلانك.</p>
+    </div>
+    <div class="why-card fade-up">
+      <span class="icon">🤝</span>
+      <h4>أثر اجتماعي حقيقي</h4>
+      <p>كل إعلان بتعمله بيساعد سائق تاكسي يوفر لعيلته دخل إضافي.</p>
+    </div>
+    <div class="why-card fade-up">
+      <span class="icon">⚡</span>
+      <h4>إطلاق سريع</h4>
+      <p>من تواصلك معنا لحد ما إعلانك يمشي في الشارع — أسبوع واحد بس.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-section">
+  <h2 class="fade-up">جاهز تبدأ؟</h2>
+  <p class="fade-up">سواء كنت صاحب عمل عايز تعلن، أو سائق عايز تكسب أكتر — احنا هنا.</p>
+  <div class="cta-btns fade-up">
+    <a href="https://wa.me/201000000000" class="btn-dark">📱 تواصل على واتساب</a>
+    <a href="mailto:info@taxiads.eg" class="btn-outline-dark">✉️ راسلنا بالإيميل</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">TAXI<span>ADS</span></div>
+  <p>© 2026 TaxiAds Ismailia — جميع الحقوق محفوظة</p>
+  <a href="#">الإسماعيلية، مصر 🇪🇬</a>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Smooth nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
